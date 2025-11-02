@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Build outputs
+*.js
+*.js.map
+*.d.ts
+cdk.out/
+dist/
+
+# CDK Context & Staging files
+.cdk.staging/
+cdk.context.json
+
+# Environment
+.env
+.env.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+
+# Submission packages (keep local only)
+*.zip
+
+# AWS
+.aws-sam/
