@@ -73,6 +73,27 @@ aws sts get-caller-identity
 
 ## Deployment Instructions
 
+### Quick Start (Using Makefile)
+
+```bash
+# Install all dependencies
+make install
+
+# Deploy to AWS (builds and pushes Docker image automatically)
+make deploy
+
+# Test Docker container locally
+make test-local
+
+# Clean up AWS resources
+make destroy
+```
+
+### Manual Deployment (Without Makefile)
+
+<details>
+<summary>Click to expand manual steps</summary>
+
 ### 1. Install Dependencies
 
 ```bash
@@ -109,6 +130,8 @@ npx cdk deploy
 - Creates S3 bucket with website hosting
 - Uploads frontend files to S3
 
+</details>
+
 **Deployment time**: ~2-3 minutes
 
 **Note the outputs**: The command will output:
@@ -133,11 +156,12 @@ Open the `WebsiteURL` in your browser to use the calculator interface.
 
 ## Destroy Infrastructure
 
-To remove all AWS resources:
-
 ```bash
-# From infrastructure directory
-npx cdk destroy
+# Using Makefile
+make destroy
+
+# Or manually
+cd infrastructure && npx cdk destroy
 ```
 
 This will:
