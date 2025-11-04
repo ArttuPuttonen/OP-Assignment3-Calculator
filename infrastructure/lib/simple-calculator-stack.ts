@@ -20,10 +20,12 @@ export class SimpleCalculatorStack extends cdk.Stack {
 
     // Lambda function for calculation (Dockerized TypeScript)
     const calculateFn = new lambda.DockerImageFunction(this, 'CalculateFunction', {
-      code: lambda.DockerImageCode.fromImageAsset(path.join(__dirname, '../../backend')),
+      code: lambda.DockerImageCode.fromImageAsset(path.join(__dirname, '../../backend'), {
+        platform: cdk.aws_ecr_assets.Platform.LINUX_ARM64, // Build for ARM64
+      }),
       timeout: cdk.Duration.seconds(10),
       memorySize: 256,
-      architecture: lambda.Architecture.X86_64, // Explicitly set architecture
+      architecture: lambda.Architecture.ARM_64, // AWS Graviton2 (cheaper, faster)
     });
 
     // API Gateway
