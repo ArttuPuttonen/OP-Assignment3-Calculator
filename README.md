@@ -11,10 +11,11 @@
 A serverless web application with **separate front and back ends** deployed on AWS using Infrastructure as Code (AWS CDK).
 
 - **Frontend**: Static HTML/JavaScript hosted on S3
-- **Backend**: Multi-stage Dockerized TypeScript Lambda function (Node.js 20.x)
+- **Backend**: Multi-stage Dockerized TypeScript Lambda function (Node.js 20.x, ARM64)
 - **API**: REST API Gateway with CORS
 - **IaC**: AWS CDK with TypeScript
 - **Region**: eu-north-1 (Stockholm)
+- **Architecture**: ARM64 (AWS Graviton2 - 20% cheaper, better performance)
 - **Containerization**: ✅ Docker with multi-stage build (AWS Lambda Container Image)
 
 **Project Structure**:
@@ -215,6 +216,15 @@ The deployment is idempotent - running `cdk deploy` multiple times will:
 ### Containerization
 
 The backend uses Docker with a multi-stage build for optimal image size and security. Stage 1 compiles TypeScript with development dependencies, while Stage 2 contains only the compiled JavaScript and production dependencies. This eliminates the TypeScript compiler and source files from the final runtime image, reducing attack surface and image size. The container uses the official AWS Lambda Node.js 20 base image for environment consistency between local testing and AWS Lambda deployment.
+
+### ARM64 Architecture
+
+The Lambda function runs on AWS Graviton2 processors (ARM64 architecture) instead of x86_64. This provides:
+- **20% lower cost** compared to x86_64
+- **Better performance** for most workloads
+- **Lower energy consumption** (more sustainable)
+
+The Docker image is built specifically for ARM64 (`LINUX_ARM64` platform), ensuring full compatibility with AWS Graviton2.
 
 ---
 
