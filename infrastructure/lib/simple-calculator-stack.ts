@@ -19,13 +19,16 @@ export class SimpleCalculatorStack extends cdk.Stack {
     super(scope, id, props);
 
     // Lambda function for calculation (Dockerized TypeScript)
+    // Note: Using ARM64 (Graviton2) for better cost/performance.
+    // To use x86_64 instead, change Architecture.ARM_64 to Architecture.X86_64
+    // and Platform.LINUX_ARM64 to Platform.LINUX_AMD64
     const calculateFn = new lambda.DockerImageFunction(this, 'CalculateFunction', {
       code: lambda.DockerImageCode.fromImageAsset(path.join(__dirname, '../../backend'), {
-        platform: cdk.aws_ecr_assets.Platform.LINUX_ARM64, // Build for ARM64
+        platform: cdk.aws_ecr_assets.Platform.LINUX_ARM64,
       }),
       timeout: cdk.Duration.seconds(10),
       memorySize: 256,
-      architecture: lambda.Architecture.ARM_64, // AWS Graviton2 (cheaper, faster)
+      architecture: lambda.Architecture.ARM_64,
     });
 
     // API Gateway
